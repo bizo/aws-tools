@@ -67,13 +67,11 @@ if [ -f $CRED_FILE ]; then
   echo "AWSAccessKeyId=${AWS_ACCESS_KEY_ID}" > $TF
   echo "AWSSecretKey=${AWS_SECRET_ACCESS_KEY}" >> $TF
 
-  cmp --quiet $CRED_FILE $TF
-  
   # overwrite if different and warn
-  if [ $? -ne 0 ]; then
+  cmp --quiet $CRED_FILE $TF || {
     echo "WARNING: AWS_CREDENTIAL_FILE did not contain the currently set AWS_ACCESS_KEY_ID and/or AWS_SECRET_ACCESS_KEY. Updating $CRED_FILE with currently set keys." >&2
     cp $TF $CRED_FILE
-  fi
+  }
   rm -f $TF
 else
   echo "AWSAccessKeyId=${AWS_ACCESS_KEY_ID}" > $CRED_FILE
@@ -102,13 +100,11 @@ if [ -f $EMR_CRED_FILE ]; then
   echo "  \"private-key\": \"${AWS_SECRET_ACCESS_KEY}\"" >> $TF
   echo "}" >> $TF
 
-  cmp --quiet $EMR_CRED_FILE $TF
-  
   # overwrite if different and warn
-  if [ $? -ne 0 ]; then
+  cmp --quiet $EMR_CRED_FILE $TF || {
     echo "WARNING: ELASTIC_MAPREDUCE_CREDENTIALS did not contain the currently set AWS_ACCESS_KEY_ID and/or AWS_SECRET_ACCESS_KEY. Updating $EMR_CRED_FILE with currently set keys." >&2
     cp $TF $EMR_CRED_FILE
-  fi
+  }
   rm -f $TF
 else
   echo "{" > $EMR_CRED_FILE
