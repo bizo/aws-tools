@@ -55,7 +55,11 @@ if [ -z "$EC2_CERT" ]; then
 fi
 
 # developer credential set up...
-CRED_FILE=~/.aws_credentials
+if [ -z "$AWS_CREDENTIAL_FILE" ]; then
+  CRED_FILE=~/.aws_credentials
+else
+  CRED_FILE=$AWS_CREDENTIAL_FILE
+fi
 
 if [ -f $CRED_FILE ]; then
   # make sure credentials are current
@@ -84,7 +88,11 @@ export AWS_SECRET_KEY=${AWS_SECRET_ACCESS_KEY}
 
 
 # same thing but for the elastic-mapreduce client
-EMR_CRED_FILE=~/.aws_credentials.json
+if [ -z "$ELASTIC_MAPREDUCE_CREDENTIALS" ]; then
+  EMR_CRED_FILE=~/.aws_credentials.json
+else
+  EMR_CRED_FILE=$ELASTIC_MAPREDUCE_CREDENTIALS
+fi
 
 if [ -f $EMR_CRED_FILE ]; then
   # make sure credentials are current
