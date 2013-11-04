@@ -63,7 +63,7 @@ fi
 
 if [ -f $CRED_FILE ]; then
   # make sure credentials are current
-  TF=`mktemp --tmpdir cred.XXX`
+  TF=`mktemp -t cred.XXX`
   echo "AWSAccessKeyId=${AWS_ACCESS_KEY_ID}" > $TF
   echo "AWSSecretKey=${AWS_SECRET_ACCESS_KEY}" >> $TF
 
@@ -94,7 +94,7 @@ fi
 
 if [ -f $EMR_CRED_FILE ]; then
   # make sure credentials are current
-  TF=`mktemp --tmpdir cred.XXX`
+  TF=`mktemp -t cred.XXX`
   echo "{" > $TF
   echo "  \"access-id\": \"${AWS_ACCESS_KEY_ID}\"," >> $TF
   echo "  \"private-key\": \"${AWS_SECRET_ACCESS_KEY}\"" >> $TF
