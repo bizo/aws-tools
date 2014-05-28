@@ -20,6 +20,8 @@ export EC2_HOME=$dir/ec2/ec2-api-tools-1.6.4
 export AWS_ELASTICACHE_HOME=$dir/elasticcache/AmazonElastiCacheCli-1.6.001
 export AWS_ELB_HOME=$dir/elb/ElasticLoadBalancing-1.0.15.1
 export AWS_EMR_HOME=$dir/emr/elastic-mapreduce-ruby-20121004
+## NOTE: above works w/ ruby 1.8.7, but fails on osx 10.9.3 / ruby 2.0.0p451; this version works:
+ # export AWS_EMR_HOME=$dir/emr/elastic-mapreduce-ruby-20131216
 export AWS_IAM_HOME=$dir/iam/IAMCli-1.5.0
 export AWS_RDS_HOME=$dir/rds/RDSCli-1.10.003
 export AWS_SNS_HOME=$dir/sns/SimpleNotificationServiceCli-1.0.3.0
