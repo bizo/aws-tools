@@ -19,7 +19,7 @@ export AWS_CLOUDWATCH_HOME=$dir/cloudwatch/CloudWatch-1.0.13.4
 export EC2_HOME=$dir/ec2/ec2-api-tools-1.6.4
 export AWS_ELASTICACHE_HOME=$dir/elasticcache/AmazonElastiCacheCli-1.6.001
 export AWS_ELB_HOME=$dir/elb/ElasticLoadBalancing-1.0.15.1
-export AWS_EMR_HOME=$dir/emr/elastic-mapreduce-ruby-20121004
+export AWS_EMR_HOME=$dir/emr/elastic-mapreduce-ruby-20130708
 ## NOTE: above works w/ ruby 1.8.7, but fails on osx 10.9.3 / ruby 2.0.0p451; this version works:
  # export AWS_EMR_HOME=$dir/emr/elastic-mapreduce-ruby-20131216
 export AWS_IAM_HOME=$dir/iam/IAMCli-1.5.0
@@ -57,21 +57,23 @@ if [ -z "$EC2_CERT" ]; then
 fi
 
 # developer credential set up...
-CRED_FILE=~/.aws_credentials
+if [ -z "$AWS_CREDENTIAL_FILE" ]; then
+  CRED_FILE=~/.aws_credentials
+else
+  CRED_FILE=$AWS_CREDENTIAL_FILE
+fi
 
 if [ -f $CRED_FILE ]; then
   # make sure credentials are current
-  TF=`mktemp cred.XXX`
+  TF=`mktemp -t cred.XXX`
   echo "AWSAccessKeyId=${AWS_ACCESS_KEY_ID}" > $TF
   echo "AWSSecretKey=${AWS_SECRET_ACCESS_KEY}" >> $TF
 
-  cmp --quiet $CRED_FILE $TF
-  
   # overwrite if different and warn
-  if [ $? -ne 0 ]; then
+  cmp --quiet $CRED_FILE $TF || {
     echo "WARNING: AWS_CREDENTIAL_FILE did not contain the currently set AWS_ACCESS_KEY_ID and/or AWS_SECRET_ACCESS_KEY. Updating $CRED_FILE with currently set keys." >&2
     cp $TF $CRED_FILE
-  fi
+  }
   rm -f $TF
 else
   echo "AWSAccessKeyId=${AWS_ACCESS_KEY_ID}" > $CRED_FILE
@@ -86,23 +88,25 @@ export AWS_SECRET_KEY=${AWS_SECRET_ACCESS_KEY}
 
 
 # same thing but for the elastic-mapreduce client
-EMR_CRED_FILE=~/.aws_credentials.json
+if [ -z "$ELASTIC_MAPREDUCE_CREDENTIALS" ]; then
+  EMR_CRED_FILE=~/.aws_credentials.json
+else
+  EMR_CRED_FILE=$ELASTIC_MAPREDUCE_CREDENTIALS
+fi
 
 if [ -f $EMR_CRED_FILE ]; then
   # make sure credentials are current
-  TF=`mktemp cred.XXX`
+  TF=`mktemp -t cred.XXX`
   echo "{" > $TF
   echo "  \"access-id\": \"${AWS_ACCESS_KEY_ID}\"," >> $TF
   echo "  \"private-key\": \"${AWS_SECRET_ACCESS_KEY}\"" >> $TF
   echo "}" >> $TF
 
-  cmp --quiet $EMR_CRED_FILE $TF
-  
   # overwrite if different and warn
-  if [ $? -ne 0 ]; then
+  cmp --quiet $EMR_CRED_FILE $TF || {
     echo "WARNING: ELASTIC_MAPREDUCE_CREDENTIALS did not contain the currently set AWS_ACCESS_KEY_ID and/or AWS_SECRET_ACCESS_KEY. Updating $EMR_CRED_FILE with currently set keys." >&2
     cp $TF $EMR_CRED_FILE
-  fi
+  }
   rm -f $TF
 else
   echo "{" > $EMR_CRED_FILE
