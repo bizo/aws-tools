@@ -11,14 +11,14 @@ fi
 
 # define homes of all CLI tools
 export AWS_TOOLS_HOME=$dir
-export EC2_AMITOOL_HOME=$dir/ami-tools/ec2-ami-tools-1.4.0.7
-export AWS_AUTO_SCALING_HOME=$dir/autoscaling/AutoScaling-1.0.61.1
+export EC2_AMITOOL_HOME=$dir/ami-tools/ec2-ami-tools-1.5.7
+export AWS_AUTO_SCALING_HOME=$dir/autoscaling/AutoScaling-1.0.61.6
 export AWS_CLOUDFORMATION_HOME=$dir/cloudformation/AWSCloudFormation-1.0.11
 export CS_HOME=$dir/cloudsearch/cloud-search-tools-1.0.0.1-2012.03.05
 export AWS_CLOUDWATCH_HOME=$dir/cloudwatch/CloudWatch-1.0.13.4
-export EC2_HOME=$dir/ec2/ec2-api-tools-1.6.4
+export EC2_HOME=$dir/ec2/ec2-api-tools-1.7.5.1
 export AWS_ELASTICACHE_HOME=$dir/elasticcache/AmazonElastiCacheCli-1.6.001
-export AWS_ELB_HOME=$dir/elb/ElasticLoadBalancing-1.0.15.1
+export AWS_ELB_HOME=$dir/elb/ElasticLoadBalancing-1.0.35.0
 export AWS_EMR_HOME=$dir/emr/elastic-mapreduce-ruby-20130708
 ## NOTE: above works w/ ruby 1.8.7, but fails on osx 10.9.3 / ruby 2.0.0p451; this version works:
  # export AWS_EMR_HOME=$dir/emr/elastic-mapreduce-ruby-20131216
