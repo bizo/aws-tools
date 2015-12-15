@@ -82,8 +82,9 @@ fi
 
 export AWS_CREDENTIAL_FILE=$CRED_FILE
 
-# aws-java-sdk uses a different env name for their secret key in the default credential provider
+# aws-java-sdk (and ec2-*) use different env names in the default credential provider
 # https://github.com/aws/aws-sdk-java/issues/50
+export AWS_ACCESS_KEY=${AWS_ACCESS_KEY_ID}
 export AWS_SECRET_KEY=${AWS_SECRET_ACCESS_KEY}
 
 
