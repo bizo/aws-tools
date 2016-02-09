@@ -56,6 +56,11 @@ if [ -z "$EC2_CERT" ]; then
   echo "WARNING: EC2_CERT must be set before running ec2-* commands" >&2
 fi
 
+if [ -z "$AWS_ACCESS_KEY_ID" ]; then
+  echo "AWS_ACCESS_KEY_ID was not set. Credentials will only be available via instance-profile. Exiting..." >&2
+  exit
+fi
+
 # developer credential set up...
 if [ -z "$AWS_CREDENTIAL_FILE" ]; then
   CRED_FILE=~/.aws_credentials
